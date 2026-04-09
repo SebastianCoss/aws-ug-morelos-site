@@ -6,151 +6,200 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   title="Únete a la Comunidad"
   description="Regístrate en AWS User Group Morelos y sé parte de nuestra comunidad de builders."
 >
-  <div class="max-w-2xl mx-auto px-4 py-16">
-    <div class="text-center mb-10">
-      <img src="/assets/logo.png" alt="AWS UG Morelos" class="w-20 h-20 object-contain mx-auto mb-4" />
-      <h1 class="text-3xl font-bold text-white mb-3">Únete a AWS UG Morelos</h1>
-      <p class="text-slate-400">
-        Completa el formulario y te agregaremos a nuestra comunidad. ¡Es completamente gratis!
-      </p>
-    </div>
 
-    <div class="p-8 rounded-2xl bg-[#0D1535] border border-[#1E3A6E]">
-      <form
-        id="registro-form"
-        name="registro-comunidad"
-        method="POST"
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
-        class="space-y-5"
-      >
-        <input type="hidden" name="form-name" value="registro-comunidad" />
-        <p class="hidden">
-          <label>No llenar: <input name="bot-field" autocomplete="off" /></label>
+  <!-- Background -->
+  <div class="relative min-h-screen">
+    <div class="absolute inset-0 grid-pattern opacity-30 pointer-events-none"></div>
+    <div class="absolute inset-0 aurora pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-2xl mx-auto px-4 py-16">
+
+      <!-- Header -->
+      <div class="text-center mb-10">
+        <div class="relative inline-block mb-5">
+          <div class="absolute inset-0 bg-[#7C3AED] opacity-20 rounded-full blur-2xl scale-150"></div>
+          <img src="/assets/logo.png" alt="AWS UG Morelos" class="relative w-16 h-16 object-contain mx-auto" />
+        </div>
+        <span class="tag bg-[#111F4A] text-[#818CF8] border border-[#1E3A6E] mb-3 inline-block">Membresía gratuita</span>
+        <h1 class="text-3xl md:text-4xl font-bold text-white mb-3">Únete a AWS UG Morelos</h1>
+        <p class="text-slate-400 max-w-sm mx-auto leading-relaxed">
+          Completa el formulario y te agregaremos a nuestra comunidad de builders.
         </p>
+      </div>
 
-        <!-- Nombre -->
-        <div>
-          <label for="nombre" class="block text-sm font-medium text-slate-300 mb-1.5">
-            Nombre completo <span class="text-red-400">*</span>
-          </label>
-          <input
-            type="text" id="nombre" name="nombre" required
-            placeholder="Tu nombre completo"
-            class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-600 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm"
-          />
-        </div>
+      <!-- Form card -->
+      <div class="relative rounded-2xl overflow-hidden">
+        <!-- Gradient border effect -->
+        <div class="absolute inset-0 bg-gradient-to-br from-[#7C3AED]/30 via-transparent to-[#3B82F6]/20 rounded-2xl pointer-events-none"></div>
 
-        <!-- Email -->
-        <div>
-          <label for="email" class="block text-sm font-medium text-slate-300 mb-1.5">
-            Correo electrónico <span class="text-red-400">*</span>
-          </label>
-          <input
-            type="email" id="email" name="email" required
-            placeholder="tu@correo.com"
-            class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-600 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm"
-          />
-        </div>
-
-        <!-- Ciudad -->
-        <div>
-          <label for="ciudad" class="block text-sm font-medium text-slate-300 mb-1.5">
-            Ciudad <span class="text-red-400">*</span>
-          </label>
-          <input
-            type="text" id="ciudad" name="ciudad" required
-            placeholder="Ej. Cuernavaca, Jiutepec, Temixco..."
-            class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-600 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm"
-          />
-        </div>
-
-        <!-- Empresa -->
-        <div>
-          <label for="empresa" class="block text-sm font-medium text-slate-300 mb-1.5">
-            Empresa u organización <span class="text-slate-500 text-xs">(opcional)</span>
-          </label>
-          <input
-            type="text" id="empresa" name="empresa"
-            placeholder="Donde trabajas o estudias"
-            class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-600 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm"
-          />
-        </div>
-
-        <!-- Experiencia -->
-        <div>
-          <label for="experiencia" class="block text-sm font-medium text-slate-300 mb-1.5">
-            Nivel de experiencia con AWS <span class="text-red-400">*</span>
-          </label>
-          <select
-            id="experiencia" name="experiencia" required
-            class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm"
+        <div class="relative bg-[#0D1535] border border-[#1E3A6E] rounded-2xl p-8">
+          <form
+            id="registro-form"
+            name="registro-comunidad"
+            method="POST"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+            class="space-y-5"
+            novalidate
           >
-            <option value="" disabled selected>Selecciona tu nivel</option>
-            <option value="principiante">Principiante — Acabo de empezar</option>
-            <option value="intermedio">Intermedio — Uso AWS regularmente</option>
-            <option value="avanzado">Avanzado — Tengo certificaciones o exp. profesional</option>
-          </select>
-        </div>
+            <input type="hidden" name="form-name" value="registro-comunidad" />
+            <p class="hidden" aria-hidden="true">
+              <label>No llenar: <input name="bot-field" autocomplete="off" tabindex="-1" /></label>
+            </p>
 
-        <!-- Builder -->
-        <div class="p-4 rounded-xl border border-[#1E3A6E] bg-[#060D24]">
-          <p class="text-sm font-medium text-slate-300 mb-3">¿Te gustaría ser Builder de la comunidad?</p>
-          <div class="space-y-2">
-            {[
-              { value: 'hablar',    label: '🎤 Presentar charlas en meetups' },
-              { value: 'blog',      label: '✍️ Escribir posts en el blog' },
-              { value: 'workshops', label: '🛠️ Dar workshops / talleres' },
-              { value: 'organizar', label: '🗂️ Ayudar a organizar eventos' },
-            ].map(opt => (
-              <label class="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" name="builder" value={opt.value}
-                  class="w-4 h-4 rounded border-[#1E3A6E] bg-[#0D1535] text-[#6B3FA0] focus:ring-[#6B3FA0] focus:ring-offset-0"
+            <!-- Row: Nombre + Email -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="nombre" class="block text-sm font-medium text-slate-300 mb-1.5">
+                  Nombre completo <span class="text-red-400" aria-label="requerido">*</span>
+                </label>
+                <input
+                  type="text" id="nombre" name="nombre" required
+                  placeholder="Tu nombre completo"
+                  autocomplete="name"
+                  class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-700 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8]/40 transition-all text-sm"
                 />
-                <span class="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">{opt.label}</span>
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-slate-300 mb-1.5">
+                  Correo electrónico <span class="text-red-400" aria-label="requerido">*</span>
+                </label>
+                <input
+                  type="email" id="email" name="email" required
+                  placeholder="tu@correo.com"
+                  autocomplete="email"
+                  class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-700 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8]/40 transition-all text-sm"
+                />
+              </div>
+            </div>
+
+            <!-- Row: Ciudad + Empresa -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="ciudad" class="block text-sm font-medium text-slate-300 mb-1.5">
+                  Ciudad <span class="text-red-400" aria-label="requerido">*</span>
+                </label>
+                <input
+                  type="text" id="ciudad" name="ciudad" required
+                  placeholder="Ej. Cuernavaca, Temixco..."
+                  autocomplete="address-level2"
+                  class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-700 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8]/40 transition-all text-sm"
+                />
+              </div>
+              <div>
+                <label for="empresa" class="block text-sm font-medium text-slate-300 mb-1.5">
+                  Empresa / Organización
+                  <span class="text-slate-600 text-xs ml-1">(opcional)</span>
+                </label>
+                <input
+                  type="text" id="empresa" name="empresa"
+                  placeholder="Donde trabajas o estudias"
+                  autocomplete="organization"
+                  class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-700 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8]/40 transition-all text-sm"
+                />
+              </div>
+            </div>
+
+            <!-- Experiencia -->
+            <div>
+              <label for="experiencia" class="block text-sm font-medium text-slate-300 mb-1.5">
+                Nivel de experiencia con AWS <span class="text-red-400" aria-label="requerido">*</span>
               </label>
-            ))}
-          </div>
+              <div class="relative">
+                <select
+                  id="experiencia" name="experiencia" required
+                  class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8]/40 transition-all text-sm appearance-none cursor-pointer"
+                >
+                  <option value="" disabled selected class="text-slate-600">Selecciona tu nivel</option>
+                  <option value="principiante">Principiante — Acabo de empezar</option>
+                  <option value="intermedio">Intermedio — Uso AWS regularmente</option>
+                  <option value="avanzado">Avanzado — Tengo certificaciones o exp. profesional</option>
+                </select>
+                <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Builder checkboxes -->
+            <div class="p-5 rounded-xl border border-[#1E3A6E] bg-[#060D24]">
+              <p class="text-sm font-medium text-slate-300 mb-4 flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#818CF8]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                ¿Te gustaría ser Builder de la comunidad?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {[
+                  { value: 'hablar',    label: 'Presentar charlas en meetups',  icon: 'M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z' },
+                  { value: 'blog',      label: 'Escribir posts en el blog',     icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
+                  { value: 'workshops', label: 'Dar workshops / talleres',      icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2' },
+                  { value: 'organizar', label: 'Ayudar a organizar eventos',    icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
+                ].map(opt => (
+                  <label class="flex items-center gap-3 p-3 rounded-lg border border-transparent hover:border-[#1E3A6E] hover:bg-[#0D1535]/50 cursor-pointer group transition-all">
+                    <input
+                      type="checkbox" name="builder" value={opt.value}
+                      class="w-4 h-4 rounded border-[#1E3A6E] bg-[#0D1535] text-[#7C3AED] focus:ring-[#7C3AED] focus:ring-offset-0 focus:ring-1 cursor-pointer"
+                    />
+                    <svg class="w-3.5 h-3.5 text-slate-600 group-hover:text-[#818CF8] transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={opt.icon}/>
+                    </svg>
+                    <span class="text-sm text-slate-500 group-hover:text-slate-300 transition-colors">{opt.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <!-- Mensaje -->
+            <div>
+              <label for="mensaje" class="block text-sm font-medium text-slate-300 mb-1.5">
+                ¿Algo que quieras compartir?
+                <span class="text-slate-600 text-xs ml-1">(opcional)</span>
+              </label>
+              <textarea
+                id="mensaje" name="mensaje" rows="3"
+                placeholder="Cuéntanos sobre ti, qué te interesa aprender, o cualquier pregunta..."
+                class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-700 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8]/40 transition-all text-sm resize-none"
+              ></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button
+              id="submit-btn"
+              type="submit"
+              class="w-full py-4 rounded-xl bg-[#7C3AED] hover:bg-[#8B5CF6] text-white font-bold text-base transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100 flex items-center justify-center gap-2 glow-purple"
+            >
+              <svg id="btn-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+              </svg>
+              <span id="btn-text">Registrarme en la comunidad</span>
+            </button>
+
+            <p class="text-xs text-slate-600 text-center flex items-center justify-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+              </svg>
+              Tus datos se usan únicamente para comunicaciones de AWS UG Morelos. Sin spam.
+            </p>
+          </form>
         </div>
-
-        <!-- Mensaje -->
-        <div>
-          <label for="mensaje" class="block text-sm font-medium text-slate-300 mb-1.5">
-            ¿Algo que quieras compartir? <span class="text-slate-500 text-xs">(opcional)</span>
-          </label>
-          <textarea
-            id="mensaje" name="mensaje" rows="3"
-            placeholder="Cuéntanos sobre ti, qué te interesa aprender, o cualquier pregunta..."
-            class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-600 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm resize-none"
-          ></textarea>
-        </div>
-
-        <!-- Submit -->
-        <button
-          id="submit-btn"
-          type="submit"
-          class="w-full py-3.5 rounded-xl bg-[#6B3FA0] hover:bg-purple-600 text-white font-semibold text-base transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
-          style="box-shadow: 0 0 20px rgba(107,63,160,0.4)"
-        >
-          Registrarme en la comunidad
-        </button>
-
-        <p class="text-xs text-slate-500 text-center">
-          Tus datos se usan únicamente para comunicaciones de AWS UG Morelos. Sin spam.
-        </p>
-      </form>
+      </div>
     </div>
   </div>
 </BaseLayout>
 
 <script>
-  const form = document.getElementById('registro-form') as HTMLFormElement;
-  const btn  = document.getElementById('submit-btn') as HTMLButtonElement;
+  const form    = document.getElementById('registro-form') as HTMLFormElement;
+  const btn     = document.getElementById('submit-btn') as HTMLButtonElement;
+  const btnText = document.getElementById('btn-text') as HTMLSpanElement;
+  const btnIcon = document.getElementById('btn-icon') as unknown as SVGElement;
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     btn.disabled = true;
-    btn.textContent = 'Enviando...';
+    btnText.textContent = 'Enviando...';
+    // Spinner icon
+    btnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>`;
 
     const formData = new FormData(form);
 
@@ -168,7 +217,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
     } catch {
       btn.disabled = false;
-      btn.textContent = 'Registrarme en la comunidad';
+      btnText.textContent = 'Registrarme en la comunidad';
+      btnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>`;
       alert('Hubo un error al enviar. Por favor intenta de nuevo.');
     }
   });

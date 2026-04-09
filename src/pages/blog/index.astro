@@ -10,47 +10,77 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags))].sort();
 ---
 
 <BaseLayout title="Blog" description="Posts técnicos sobre AWS escritos por los miembros de AWS UG Morelos.">
-  <div class="max-w-6xl mx-auto px-4 py-16">
-    <div class="mb-12 text-center">
-      <h1 class="text-4xl font-bold text-white mb-3">Blog de la Comunidad</h1>
-      <p class="text-slate-400 text-lg max-w-xl mx-auto">
+
+  <!-- Header -->
+  <div class="relative border-b border-[#1E3A6E] overflow-hidden">
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+    <div class="absolute inset-0 aurora"></div>
+    <div class="max-w-6xl mx-auto px-4 py-14 relative z-10">
+      <span class="tag bg-[#111F4A] text-[#06B6D4] border border-[#1E3A6E] mb-4 block w-fit">Comunidad</span>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3">Blog de la Comunidad</h1>
+      <p class="text-slate-400 text-lg max-w-xl leading-relaxed">
         Tutoriales, casos de uso y aprendizajes reales escritos por miembros de AWS UG Morelos.
       </p>
     </div>
+  </div>
 
-    <!-- Tags filter (visual only, JS opcional) -->
+  <div class="max-w-6xl mx-auto px-4 py-10">
+
+    <!-- Tag filters -->
     {allTags.length > 0 && (
-      <div class="flex flex-wrap gap-2 mb-10 justify-center">
+      <div class="flex flex-wrap gap-2 mb-8">
         {allTags.map(tag => (
-          <span class="text-xs px-3 py-1.5 rounded-full bg-[#111F4A] text-[#818CF8] border border-[#1E3A6E] cursor-default">
-            #{tag}
+          <span class="inline-flex items-center gap-1 text-xs px-3 py-1.5 rounded-full bg-[#0D1535] text-slate-500 border border-[#1E3A6E]">
+            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
+            </svg>
+            {tag}
           </span>
         ))}
       </div>
     )}
 
     {posts.length === 0 ? (
-      <div class="text-center py-20">
-        <p class="text-slate-400 text-lg mb-4">Aún no hay posts publicados.</p>
-        <p class="text-slate-500 text-sm">¿Quieres ser el primero? Abre un PR con tu post en <code class="text-[#818CF8]">src/content/blog/</code></p>
+      <div class="text-center py-24">
+        <div class="w-16 h-16 rounded-2xl bg-[#0D1535] border border-[#1E3A6E] flex items-center justify-center mx-auto mb-5">
+          <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+          </svg>
+        </div>
+        <p class="text-slate-300 text-xl font-bold mb-2">Aún no hay posts publicados</p>
+        <p class="text-slate-500 text-sm">
+          ¿Quieres ser el primero? Abre un PR con tu post en
+          <code class="text-[#818CF8] font-mono text-xs bg-[#0D1535] px-1 py-0.5 rounded ml-1">src/content/blog/</code>
+        </p>
       </div>
     ) : (
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {posts.map(post => <PostCard post={post} />)}
       </div>
     )}
 
     <!-- CTA contribuir -->
-    <div class="mt-16 p-6 rounded-xl border border-[#1E3A6E] bg-[#0D1535] text-center">
-      <h3 class="text-white font-semibold mb-2">¿Quieres publicar un post?</h3>
-      <p class="text-slate-400 text-sm mb-4">Crea un archivo <code class="text-[#818CF8]">.mdx</code> en <code class="text-[#818CF8]">src/content/blog/</code> y abre un Pull Request.</p>
+    <div class="mt-16 p-7 rounded-2xl border border-[#1E3A6E] bg-gradient-to-br from-[#0D1535] to-[#111F4A] flex flex-col sm:flex-row items-center gap-5">
+      <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-[#06B6D4] to-[#3B82F6] flex items-center justify-center">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+        </svg>
+      </div>
+      <div class="flex-1 text-center sm:text-left">
+        <h3 class="text-white font-bold mb-1">¿Quieres publicar un post?</h3>
+        <p class="text-slate-400 text-sm">
+          Crea un archivo <code class="text-[#818CF8] font-mono text-xs bg-[#060D24] px-1 py-0.5 rounded">.mdx</code> en <code class="text-[#818CF8] font-mono text-xs bg-[#060D24] px-1 py-0.5 rounded">src/content/blog/</code> y abre un Pull Request en GitHub.
+        </p>
+      </div>
       <a
         href="https://github.com/SebastianCoss/aws-ug-morelos-site"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#6B3FA0] hover:bg-purple-600 text-white text-sm font-medium transition-colors"
+        class="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#7C3AED] hover:bg-[#8B5CF6] text-white text-sm font-semibold transition-all duration-200 hover:scale-[1.02] glow-purple whitespace-nowrap"
       >
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+        </svg>
         Ver en GitHub
       </a>
     </div>

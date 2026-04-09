@@ -12,15 +12,18 @@ const currentPath = Astro.url.pathname;
 <header class="sticky top-0 z-50 glass border-b border-[var(--color-border)]">
   <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
     <!-- Logo -->
-    <a href="/" class="flex items-center gap-3 group">
-      <img
-        src="/assets/logo.png"
-        alt="AWS UG Morelos"
-        class="w-12 h-12 object-contain group-hover:scale-105 transition-transform"
-      />
+    <a href="/" class="flex items-center gap-3 group" aria-label="AWS UG Morelos - Inicio">
+      <div class="relative">
+        <div class="absolute inset-0 bg-[var(--color-aws-purple)] opacity-30 rounded-full blur-md group-hover:opacity-50 transition-opacity"></div>
+        <img
+          src="/assets/logo.png"
+          alt="AWS UG Morelos"
+          class="relative w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-200"
+        />
+      </div>
       <div class="hidden sm:block">
-        <p class="text-white font-bold text-sm leading-tight">AWS UG</p>
-        <p class="text-[var(--color-aws-neon)] text-xs font-medium leading-tight">Morelos</p>
+        <p class="text-white font-bold text-sm leading-tight font-[Space_Grotesk,sans-serif]">AWS UG</p>
+        <p class="text-[var(--color-aws-neon)] text-xs font-semibold leading-tight tracking-wide">Morelos</p>
       </div>
     </a>
 
@@ -31,20 +34,24 @@ const currentPath = Astro.url.pathname;
           {link.highlight ? (
             <a
               href={link.href}
-              class="ml-2 px-4 py-2 rounded-lg bg-[var(--color-aws-purple)] hover:bg-purple-600 text-white text-sm font-medium transition-colors glow-purple"
+              class="ml-2 px-4 py-2 rounded-lg bg-[var(--color-aws-purple)] hover:bg-[var(--color-aws-purple-light)] text-white text-sm font-semibold transition-all duration-200 glow-purple hover:glow-neon"
             >
               {link.label}
             </a>
           ) : (
             <a
               href={link.href}
-              class={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                currentPath.startsWith(link.href.replace('/#', '/'))
-                  ? 'text-white bg-[var(--color-surface-2)]'
-                  : 'text-[var(--color-text-muted)] hover:text-white hover:bg-[var(--color-surface)]'
+              class={`relative px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 group ${
+                currentPath === link.href || currentPath.startsWith(link.href.replace('/#', '/').replace('/#about', '/'))
+                  ? 'text-white'
+                  : 'text-[var(--color-text-muted)] hover:text-white'
               }`}
             >
-              {link.label}
+              <span class="relative z-10">{link.label}</span>
+              {(currentPath === link.href || currentPath.startsWith(link.href.replace('/#', '/').replace('/#about', '/'))) && (
+                <span class="absolute inset-0 rounded-lg bg-[var(--color-surface-2)]"></span>
+              )}
+              <span class="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-0 bg-gradient-to-r from-[var(--color-aws-neon)] to-[var(--color-aws-purple)] rounded-full group-hover:w-3/4 transition-all duration-300"></span>
             </a>
           )}
         </li>
@@ -54,22 +61,28 @@ const currentPath = Astro.url.pathname;
     <!-- Mobile menu button -->
     <button
       id="mobile-menu-btn"
-      class="md:hidden text-[var(--color-text-muted)] hover:text-white p-2"
+      class="md:hidden text-[var(--color-text-muted)] hover:text-white p-2 rounded-lg hover:bg-[var(--color-surface)] transition-colors"
       aria-label="Abrir menú"
+      aria-expanded="false"
     >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg id="icon-menu" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+      <svg id="icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
       </svg>
     </button>
   </nav>
 
   <!-- Mobile Nav -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-[var(--color-border)] px-4 pb-4">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-[var(--color-border)] px-4 py-3 space-y-1">
     {navLinks.map((link) => (
       <a
         href={link.href}
-        class={`block py-3 text-sm font-medium border-b border-[var(--color-border)] last:border-0 ${
-          link.highlight ? 'text-[var(--color-aws-neon)]' : 'text-[var(--color-text-muted)] hover:text-white'
+        class={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+          link.highlight
+            ? 'bg-[var(--color-aws-purple)] text-white'
+            : 'text-[var(--color-text-muted)] hover:text-white hover:bg-[var(--color-surface)]'
         }`}
       >
         {link.label}
@@ -81,5 +94,14 @@ const currentPath = Astro.url.pathname;
 <script>
   const btn = document.getElementById('mobile-menu-btn');
   const menu = document.getElementById('mobile-menu');
-  btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+  const iconMenu = document.getElementById('icon-menu');
+  const iconClose = document.getElementById('icon-close');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    iconMenu?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  });
 </script>
