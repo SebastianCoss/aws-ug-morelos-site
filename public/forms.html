@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Netlify Forms</title></head>
+<body>
+  <!--
+    Archivo de detección de formularios para Netlify Forms.
+    Netlify escanea los archivos estáticos en /public para detectar formularios.
+    Este archivo es necesario para que Astro + Netlify Forms funcionen correctamente.
+  -->
+  <form
+    name="registro-comunidad"
+    data-netlify="true"
+    data-netlify-honeypot="bot-field"
+    hidden
+  >
+    <input type="text"     name="nombre" />
+    <input type="email"    name="email" />
+    <input type="text"     name="ciudad" />
+    <input type="text"     name="empresa" />
+    <select name="experiencia">
+      <option value="principiante">Principiante</option>
+      <option value="intermedio">Intermedio</option>
+      <option value="avanzado">Avanzado</option>
+    </select>
+    <input type="checkbox" name="builder" value="hablar" />
+    <input type="checkbox" name="builder" value="blog" />
+    <input type="checkbox" name="builder" value="workshops" />
+    <input type="checkbox" name="builder" value="organizar" />
+    <textarea name="mensaje"></textarea>
+    <input type="text"     name="bot-field" />
+  </form>
+</body>
+</html>
