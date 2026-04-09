@@ -20,7 +20,8 @@ const glossary = defineCollection({
   schema: z.object({
     title: z.string(),
     acronym: z.string().optional(),
-    category: z.enum(['Compute', 'Storage', 'Network', 'Database', 'AI/ML', 'Security', 'DevOps', 'Containers', 'Serverless', 'Analytics', 'Management']),
+    category: z.enum(['Fundamentos', 'Comunidad', 'Compute', 'Storage', 'Database', 'Analytics', 'Security', 'Network', 'AI/ML', 'DevOps', 'Roles', 'Optimización', 'Pro Tips']),
+    section: z.number().min(1).max(10).optional(),
     description: z.string(),
     useCase: z.string(),
     awsLink: z.string().url().optional(),

@@ -4,40 +4,172 @@ import { getCollection } from 'astro:content';
 import GlossaryCard from '../../components/glossary/GlossaryCard.astro';
 
 const allTerms = await getCollection('glossary');
-const terms = allTerms.sort((a, b) => a.data.title.localeCompare(b.data.title));
+const terms = allTerms.sort((a, b) => a.data.title.localeCompare(b.data.title, 'es'));
 
-const categories = [...new Set(terms.map(t => t.data.category))].sort();
+const sections = [
+  { key: 'all',          label: '🔍 Todos',             emoji: '' },
+  { key: 'Fundamentos',  label: '☁️ Fundamentos',        emoji: '☁️' },
+  { key: 'Comunidad',    label: '👥 Comunidad',           emoji: '👥' },
+  { key: 'Compute',      label: '🛠️ Compute',             emoji: '🛠️' },
+  { key: 'Storage',      label: '💾 Storage',             emoji: '💾' },
+  { key: 'Database',     label: '📊 Databases',           emoji: '📊' },
+  { key: 'Analytics',    label: '📈 Analítica',           emoji: '📈' },
+  { key: 'Security',     label: '🔒 Seguridad',           emoji: '🔒' },
+  { key: 'Network',      label: '🌐 Redes',               emoji: '🌐' },
+  { key: 'AI/ML',        label: '🤖 IA & ML',             emoji: '🤖' },
+  { key: 'DevOps',       label: '🚀 DevOps',              emoji: '🚀' },
+  { key: 'Roles',        label: '💡 Roles & Jerga',       emoji: '💡' },
+  { key: 'Optimización', label: '💰 Optimización',        emoji: '💰' },
+  { key: 'Pro Tips',     label: '🌟 Pro Tips',            emoji: '🌟' },
+];
 ---
 
-<BaseLayout title="Glosario AWS" description="Glosario de términos y servicios AWS en español, mantenido por la comunidad AWS UG Morelos.">
-  <div class="max-w-6xl mx-auto px-4 py-16">
-    <div class="mb-12 text-center">
+<BaseLayout title="Glosario AWS" description="Glosario completo de más de 100 términos y servicios AWS en español, mantenido por la comunidad AWS UG Morelos.">
+  <div class="max-w-7xl mx-auto px-4 py-16">
+
+    <!-- Header -->
+    <div class="mb-10 text-center">
       <h1 class="text-4xl font-bold text-white mb-3">Glosario AWS</h1>
-      <p class="text-slate-400 text-lg max-w-xl mx-auto">
-        Términos, servicios y conceptos de AWS explicados en español por la comunidad.
+      <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+        +100 términos de AWS explicados en español por la comunidad. Desde fundamentos hasta IA.
       </p>
+      <p class="text-slate-500 text-sm mt-2">{terms.length} términos · 10 secciones</p>
     </div>
 
-    <!-- Categories -->
-    {categories.length > 0 && (
-      <div class="flex flex-wrap gap-2 mb-10 justify-center">
-        {categories.map(cat => (
-          <span class="text-xs px-3 py-1.5 rounded-full bg-[#111F4A] text-[#818CF8] border border-[#1E3A6E]">
-            {cat}
-          </span>
-        ))}
+    <!-- Buscador -->
+    <div class="mb-6 max-w-xl mx-auto">
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Buscar término... (ej: Lambda, VPC, IAM)"
+          class="w-full pl-10 pr-4 py-3 rounded-xl bg-[#0D1535] border border-[#1E3A6E] text-white placeholder-slate-500 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm"
+        />
       </div>
-    )}
+    </div>
 
-    {terms.length === 0 ? (
-      <div class="text-center py-20">
-        <p class="text-slate-400 text-lg">El glosario está vacío por ahora.</p>
-        <p class="text-slate-500 text-sm mt-2">Contribuye abriendo un PR con tu término en <code class="text-[#818CF8]">src/content/glossary/</code></p>
-      </div>
-    ) : (
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {terms.map(term => <GlossaryCard term={term} />)}
-      </div>
-    )}
+    <!-- Tabs de secciones -->
+    <div class="flex flex-wrap gap-2 mb-8 justify-center" id="tabs-container">
+      {sections.map((s) => (
+        <button
+          data-tab={s.key}
+          class={`tab-btn px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+            s.key === 'all'
+              ? 'bg-[#6B3FA0] border-[#6B3FA0] text-white'
+              : 'bg-[#0D1535] border-[#1E3A6E] text-slate-400 hover:border-[#818CF8] hover:text-white'
+          }`}
+        >
+          {s.label}
+        </button>
+      ))}
+    </div>
+
+    <!-- Contador -->
+    <p id="results-count" class="text-sm text-slate-500 mb-4 text-center"></p>
+
+    <!-- Grid de términos -->
+    <div id="glossary-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {terms.map(term => (
+        <div
+          class="glossary-item"
+          data-category={term.data.category}
+          data-title={term.data.title.toLowerCase()}
+          data-description={(term.data.description ?? '').toLowerCase()}
+          data-acronym={(term.data.acronym ?? '').toLowerCase()}
+        >
+          <GlossaryCard term={term} />
+        </div>
+      ))}
+    </div>
+
+    <!-- Empty state -->
+    <div id="empty-state" class="hidden text-center py-16">
+      <p class="text-slate-400 text-lg mb-2">No se encontraron términos</p>
+      <p class="text-slate-500 text-sm">Intenta con otro término o <button id="clear-search" class="text-[#818CF8] hover:underline">limpia la búsqueda</button></p>
+    </div>
+
+    <!-- CTA contribuir -->
+    <div class="mt-14 p-6 rounded-xl border border-[#1E3A6E] bg-[#0D1535] text-center">
+      <h3 class="text-white font-semibold mb-2">¿Falta algún término?</h3>
+      <p class="text-slate-400 text-sm mb-4">
+        Crea un archivo <code class="text-[#818CF8]">.mdx</code> en <code class="text-[#818CF8]">src/content/glossary/</code> y abre un Pull Request.
+      </p>
+      <a
+        href="https://github.com/SebastianCoss/aws-ug-morelos-site"
+        target="_blank" rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#6B3FA0] hover:bg-purple-600 text-white text-sm font-medium transition-colors"
+      >
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        Contribuir en GitHub
+      </a>
+    </div>
   </div>
 </BaseLayout>
+
+<script>
+  const items    = Array.from(document.querySelectorAll<HTMLElement>('.glossary-item'));
+  const tabs     = Array.from(document.querySelectorAll<HTMLButtonElement>('.tab-btn'));
+  const searchInput  = document.getElementById('search-input') as HTMLInputElement;
+  const emptyState   = document.getElementById('empty-state') as HTMLElement;
+  const resultsCount = document.getElementById('results-count') as HTMLElement;
+  const clearBtn     = document.getElementById('clear-search');
+
+  let activeTab = 'all';
+  let searchQuery = '';
+
+  function filter() {
+    let visible = 0;
+    items.forEach(item => {
+      const cat   = item.dataset.category ?? '';
+      const title = item.dataset.title ?? '';
+      const desc  = item.dataset.description ?? '';
+      const acro  = item.dataset.acronym ?? '';
+
+      const matchTab    = activeTab === 'all' || cat === activeTab;
+      const matchSearch = !searchQuery ||
+        title.includes(searchQuery) ||
+        desc.includes(searchQuery) ||
+        acro.includes(searchQuery);
+
+      const show = matchTab && matchSearch;
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    emptyState.classList.toggle('hidden', visible > 0);
+    resultsCount.textContent = visible > 0
+      ? `${visible} término${visible !== 1 ? 's' : ''} encontrado${visible !== 1 ? 's' : ''}`
+      : '';
+  }
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeTab = btn.dataset.tab ?? 'all';
+      tabs.forEach(b => {
+        const isActive = b.dataset.tab === activeTab;
+        b.className = `tab-btn px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+          isActive
+            ? 'bg-[#6B3FA0] border-[#6B3FA0] text-white'
+            : 'bg-[#0D1535] border-[#1E3A6E] text-slate-400 hover:border-[#818CF8] hover:text-white'
+        }`;
+      });
+      filter();
+    });
+  });
+
+  searchInput?.addEventListener('input', (e) => {
+    searchQuery = (e.target as HTMLInputElement).value.toLowerCase().trim();
+    filter();
+  });
+
+  clearBtn?.addEventListener('click', () => {
+    searchInput.value = '';
+    searchQuery = '';
+    filter();
+  });
+
+  filter(); // initial count
+</script>
