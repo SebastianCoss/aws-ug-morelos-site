@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-aws-purple: #6B3FA0;
+  --color-aws-blue: #3B82F6;
+  --color-aws-neon: #818CF8;
+  --color-bg: #060D24;
+  --color-surface: #0D1535;
+  --color-surface-2: #111F4A;
+  --color-border: #1E3A6E;
+  --color-text: #E2E8F0;
+  --color-text-muted: #94A3B8;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Fira Code', monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background-color: var(--color-aws-purple);
+    color: white;
+  }
+}
+
+@layer utilities {
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(107, 63, 160, 0.4);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+  }
+
+  .glass {
+    background: rgba(13, 21, 53, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #818CF8 0%, #6B3FA0 50%, #3B82F6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}

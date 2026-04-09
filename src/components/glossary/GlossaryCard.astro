@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  term: CollectionEntry<'glossary'>;
+}
+
+const { term } = Astro.props;
+const { title, acronym, category, description } = term.data;
+
+const categoryColors: Record<string, string> = {
+  Compute: 'bg-orange-900/30 text-orange-400 border-orange-800/50',
+  Storage: 'bg-blue-900/30 text-blue-400 border-blue-800/50',
+  Network: 'bg-cyan-900/30 text-cyan-400 border-cyan-800/50',
+  Database: 'bg-green-900/30 text-green-400 border-green-800/50',
+  'AI/ML': 'bg-purple-900/30 text-purple-400 border-purple-800/50',
+  Security: 'bg-red-900/30 text-red-400 border-red-800/50',
+  DevOps: 'bg-yellow-900/30 text-yellow-400 border-yellow-800/50',
+  Containers: 'bg-indigo-900/30 text-indigo-400 border-indigo-800/50',
+  Serverless: 'bg-pink-900/30 text-pink-400 border-pink-800/50',
+  Analytics: 'bg-teal-900/30 text-teal-400 border-teal-800/50',
+  Management: 'bg-slate-700/30 text-slate-300 border-slate-600/50',
+};
+---
+
+<a
+  href={`/glossary/${term.id}`}
+  class="group block p-5 rounded-xl bg-[#0D1535] border border-[#1E3A6E] hover:border-[#818CF8] transition-all hover:-translate-y-1"
+>
+  <div class="flex items-start justify-between mb-3">
+    <div>
+      <h3 class="text-white font-bold group-hover:text-[#818CF8] transition-colors">{title}</h3>
+      {acronym && <p class="text-xs text-slate-500 mt-0.5">({acronym})</p>}
+    </div>
+    <span class={`text-xs px-2 py-0.5 rounded-full border ${categoryColors[category] ?? 'bg-slate-700/30 text-slate-300 border-slate-600/50'}`}>
+      {category}
+    </span>
+  </div>
+  <p class="text-slate-400 text-sm line-clamp-2 leading-relaxed">{description}</p>
+</a>

@@ -1,0 +1,93 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const terms = await getCollection('glossary');
+  return terms.map(term => ({
+    params: { slug: term.id },
+    props: { term },
+  }));
+}
+
+const { term } = Astro.props;
+const { title, acronym, category, description, useCase, awsLink, relatedServices } = term.data;
+const { Content } = await render(term);
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="max-w-3xl mx-auto px-4 py-16">
+    <!-- Breadcrumb -->
+    <nav class="text-sm text-slate-500 mb-8">
+      <a href="/glossary" class="hover:text-[#818CF8] transition-colors">Glosario</a>
+      <span class="mx-2">/</span>
+      <span class="text-slate-300">{title}</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="mb-8">
+      <div class="flex items-start justify-between gap-4 mb-3">
+        <h1 class="text-3xl font-bold text-white">
+          {title}
+          {acronym && <span class="text-slate-400 text-xl font-normal ml-2">({acronym})</span>}
+        </h1>
+        <span class="text-xs px-3 py-1 rounded-full bg-[#111F4A] text-[#818CF8] border border-[#1E3A6E] shrink-0">
+          {category}
+        </span>
+      </div>
+      <p class="text-slate-400 text-lg leading-relaxed">{description}</p>
+    </div>
+
+    <!-- Use Case -->
+    <div class="mb-8 p-5 rounded-xl bg-[#0D1535] border border-[#1E3A6E]">
+      <h2 class="text-white font-semibold mb-2 flex items-center gap-2">
+        <span>💡</span> ¿Cuándo se usa?
+      </h2>
+      <p class="text-slate-400 leading-relaxed">{useCase}</p>
+    </div>
+
+    <!-- Content (MDX) -->
+    <div class="prose prose-invert max-w-none
+      prose-headings:text-white prose-p:text-slate-300 prose-p:leading-relaxed
+      prose-a:text-[#818CF8] prose-code:text-[#818CF8] prose-code:bg-[#0D1535]
+      prose-pre:bg-[#0D1535] prose-pre:border prose-pre:border-[#1E3A6E]
+      prose-strong:text-white prose-li:text-slate-300">
+      <Content />
+    </div>
+
+    <!-- Related Services -->
+    {relatedServices.length > 0 && (
+      <div class="mt-10 pt-8 border-t border-[#1E3A6E]">
+        <h3 class="text-white font-semibold mb-3">Servicios relacionados</h3>
+        <div class="flex flex-wrap gap-2">
+          {relatedServices.map(s => (
+            <span class="text-sm px-3 py-1 rounded-lg bg-[#111F4A] text-slate-300 border border-[#1E3A6E]">{s}</span>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- AWS Link -->
+    {awsLink && (
+      <div class="mt-8">
+        <a
+          href={awsLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#1E3A6E] text-[#818CF8] hover:border-[#818CF8] hover:text-white text-sm transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+          </svg>
+          Documentación oficial AWS
+        </a>
+      </div>
+    )}
+
+    <div class="mt-10 pt-8 border-t border-[#1E3A6E]">
+      <a href="/glossary" class="inline-flex items-center gap-2 text-[#818CF8] hover:text-white transition-colors text-sm">
+        ← Volver al Glosario
+      </a>
+    </div>
+  </div>
+</BaseLayout>

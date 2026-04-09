@@ -1,0 +1,32 @@
+---
+title: "Amazon EC2"
+acronym: "Elastic Compute Cloud"
+category: "Compute"
+description: "Servicio de cómputo en la nube que proporciona capacidad de procesamiento escalable y redimensionable. Permite ejecutar servidores virtuales (instancias) en minutos."
+useCase: "Cuando necesitas servidores virtuales para ejecutar aplicaciones, sitios web, APIs, o procesos batch sin invertir en hardware físico."
+awsLink: "https://aws.amazon.com/ec2/"
+relatedServices: ["Auto Scaling", "Elastic Load Balancing", "Amazon EBS", "Amazon VPC"]
+---
+
+## ¿Qué es Amazon EC2?
+
+Amazon EC2 (Elastic Compute Cloud) es el servicio de servidores virtuales de AWS. Puedes pensar en una instancia EC2 como una computadora en la nube que puedes encender, apagar y configurar según tus necesidades.
+
+## Tipos de instancias principales
+
+| Familia | Uso ideal |
+|---------|-----------|
+| `t3`, `t4g` | Workloads de propósito general con bajo costo |
+| `m6i`, `m7g` | Aplicaciones balanceadas en CPU/RAM |
+| `c6i`, `c7g` | Cargas intensivas en CPU (APIs, procesamiento) |
+| `r6i`, `r7g` | Cargas con alta demanda de memoria (bases de datos) |
+
+## Modelo de precios
+
+- **On-Demand**: Paga por hora o segundo. Sin compromisos.
+- **Reserved**: Descuentos de hasta 72% con compromiso de 1 o 3 años.
+- **Spot**: Hasta 90% de descuento usando capacidad no utilizada.
+
+## Ejemplo de uso común
+
+Un equipo de desarrollo en Morelos usa EC2 para correr su API Node.js en producción usando una instancia `t3.medium` con Auto Scaling activado para manejar picos de tráfico.

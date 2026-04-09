@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import GlossaryCard from '../../components/glossary/GlossaryCard.astro';
+
+const allTerms = await getCollection('glossary');
+const terms = allTerms.sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+const categories = [...new Set(terms.map(t => t.data.category))].sort();
+---
+
+<BaseLayout title="Glosario AWS" description="Glosario de términos y servicios AWS en español, mantenido por la comunidad AWS UG Morelos.">
+  <div class="max-w-6xl mx-auto px-4 py-16">
+    <div class="mb-12 text-center">
+      <h1 class="text-4xl font-bold text-white mb-3">Glosario AWS</h1>
+      <p class="text-slate-400 text-lg max-w-xl mx-auto">
+        Términos, servicios y conceptos de AWS explicados en español por la comunidad.
+      </p>
+    </div>
+
+    <!-- Categories -->
+    {categories.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-10 justify-center">
+        {categories.map(cat => (
+          <span class="text-xs px-3 py-1.5 rounded-full bg-[#111F4A] text-[#818CF8] border border-[#1E3A6E]">
+            {cat}
+          </span>
+        ))}
+      </div>
+    )}
+
+    {terms.length === 0 ? (
+      <div class="text-center py-20">
+        <p class="text-slate-400 text-lg">El glosario está vacío por ahora.</p>
+        <p class="text-slate-500 text-sm mt-2">Contribuye abriendo un PR con tu término en <code class="text-[#818CF8]">src/content/glossary/</code></p>
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {terms.map(term => <GlossaryCard term={term} />)}
+      </div>
+    )}
+  </div>
+</BaseLayout>
