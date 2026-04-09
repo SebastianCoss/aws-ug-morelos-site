@@ -8,7 +8,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 >
   <div class="max-w-2xl mx-auto px-4 py-16">
     <div class="text-center mb-10">
-      <img src="/assets/logo.png" alt="AWS UG Morelos" class="w-16 h-16 object-contain mx-auto mb-4" />
+      <img src="/assets/logo.png" alt="AWS UG Morelos" class="w-20 h-20 object-contain mx-auto mb-4" />
       <h1 class="text-3xl font-bold text-white mb-3">Únete a AWS UG Morelos</h1>
       <p class="text-slate-400">
         Completa el formulario y te agregaremos a nuestra comunidad. ¡Es completamente gratis!
@@ -16,16 +16,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <div class="p-8 rounded-2xl bg-[#0D1535] border border-[#1E3A6E]">
-      <!-- Netlify Form -->
       <form
+        id="registro-form"
         name="registro-comunidad"
         method="POST"
         data-netlify="true"
         data-netlify-honeypot="bot-field"
-        action="/success"
         class="space-y-5"
       >
-        <!-- Netlify hidden field -->
         <input type="hidden" name="form-name" value="registro-comunidad" />
         <p class="hidden">
           <label>No llenar: <input name="bot-field" autocomplete="off" /></label>
@@ -37,10 +35,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             Nombre completo <span class="text-red-400">*</span>
           </label>
           <input
-            type="text"
-            id="nombre"
-            name="nombre"
-            required
+            type="text" id="nombre" name="nombre" required
             placeholder="Tu nombre completo"
             class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-600 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm"
           />
@@ -52,10 +47,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             Correo electrónico <span class="text-red-400">*</span>
           </label>
           <input
-            type="email"
-            id="email"
-            name="email"
-            required
+            type="email" id="email" name="email" required
             placeholder="tu@correo.com"
             class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-600 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm"
           />
@@ -67,62 +59,52 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             Ciudad <span class="text-red-400">*</span>
           </label>
           <input
-            type="text"
-            id="ciudad"
-            name="ciudad"
-            required
+            type="text" id="ciudad" name="ciudad" required
             placeholder="Ej. Cuernavaca, Jiutepec, Temixco..."
             class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-600 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm"
           />
         </div>
 
-        <!-- Empresa / Organización -->
+        <!-- Empresa -->
         <div>
           <label for="empresa" class="block text-sm font-medium text-slate-300 mb-1.5">
             Empresa u organización <span class="text-slate-500 text-xs">(opcional)</span>
           </label>
           <input
-            type="text"
-            id="empresa"
-            name="empresa"
+            type="text" id="empresa" name="empresa"
             placeholder="Donde trabajas o estudias"
             class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-600 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm"
           />
         </div>
 
-        <!-- Experiencia en AWS -->
+        <!-- Experiencia -->
         <div>
           <label for="experiencia" class="block text-sm font-medium text-slate-300 mb-1.5">
             Nivel de experiencia con AWS <span class="text-red-400">*</span>
           </label>
           <select
-            id="experiencia"
-            name="experiencia"
-            required
+            id="experiencia" name="experiencia" required
             class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm"
           >
-            <option value="" disabled selected class="text-slate-600">Selecciona tu nivel</option>
+            <option value="" disabled selected>Selecciona tu nivel</option>
             <option value="principiante">Principiante — Acabo de empezar</option>
             <option value="intermedio">Intermedio — Uso AWS regularmente</option>
             <option value="avanzado">Avanzado — Tengo certificaciones o exp. profesional</option>
           </select>
         </div>
 
-        <!-- ¿Quieres ser Builder? -->
+        <!-- Builder -->
         <div class="p-4 rounded-xl border border-[#1E3A6E] bg-[#060D24]">
           <p class="text-sm font-medium text-slate-300 mb-3">¿Te gustaría ser Builder de la comunidad?</p>
           <div class="space-y-2">
             {[
-              { id: 'builder-hablar', value: 'hablar', label: '🎤 Presentar charlas en meetups' },
-              { id: 'builder-blog', value: 'blog', label: '✍️ Escribir posts en el blog' },
-              { id: 'builder-workshops', value: 'workshops', label: '🛠️ Dar workshops / talleres' },
-              { id: 'builder-organizar', value: 'organizar', label: '🗂️ Ayudar a organizar eventos' },
+              { value: 'hablar',    label: '🎤 Presentar charlas en meetups' },
+              { value: 'blog',      label: '✍️ Escribir posts en el blog' },
+              { value: 'workshops', label: '🛠️ Dar workshops / talleres' },
+              { value: 'organizar', label: '🗂️ Ayudar a organizar eventos' },
             ].map(opt => (
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input
-                  type="checkbox"
-                  name="builder"
-                  value={opt.value}
+                <input type="checkbox" name="builder" value={opt.value}
                   class="w-4 h-4 rounded border-[#1E3A6E] bg-[#0D1535] text-[#6B3FA0] focus:ring-[#6B3FA0] focus:ring-offset-0"
                 />
                 <span class="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">{opt.label}</span>
@@ -131,15 +113,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </div>
         </div>
 
-        <!-- Mensaje (opcional) -->
+        <!-- Mensaje -->
         <div>
           <label for="mensaje" class="block text-sm font-medium text-slate-300 mb-1.5">
             ¿Algo que quieras compartir? <span class="text-slate-500 text-xs">(opcional)</span>
           </label>
           <textarea
-            id="mensaje"
-            name="mensaje"
-            rows="3"
+            id="mensaje" name="mensaje" rows="3"
             placeholder="Cuéntanos sobre ti, qué te interesa aprender, o cualquier pregunta..."
             class="w-full px-4 py-3 rounded-xl bg-[#060D24] border border-[#1E3A6E] text-white placeholder-slate-600 focus:outline-none focus:border-[#818CF8] focus:ring-1 focus:ring-[#818CF8] transition-colors text-sm resize-none"
           ></textarea>
@@ -147,8 +127,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <!-- Submit -->
         <button
+          id="submit-btn"
           type="submit"
-          class="w-full py-3.5 rounded-xl bg-[#6B3FA0] hover:bg-purple-600 text-white font-semibold text-base transition-all hover:scale-[1.01] active:scale-[0.99]"
+          class="w-full py-3.5 rounded-xl bg-[#6B3FA0] hover:bg-purple-600 text-white font-semibold text-base transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
           style="box-shadow: 0 0 20px rgba(107,63,160,0.4)"
         >
           Registrarme en la comunidad
@@ -161,3 +142,34 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  const form = document.getElementById('registro-form') as HTMLFormElement;
+  const btn  = document.getElementById('submit-btn') as HTMLButtonElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+
+      if (res.ok) {
+        window.location.href = '/success';
+      } else {
+        throw new Error('Error al enviar');
+      }
+    } catch {
+      btn.disabled = false;
+      btn.textContent = 'Registrarme en la comunidad';
+      alert('Hubo un error al enviar. Por favor intenta de nuevo.');
+    }
+  });
+</script>
