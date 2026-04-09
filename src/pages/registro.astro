@@ -21,14 +21,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         name="registro-comunidad"
         method="POST"
         data-netlify="true"
-        netlify-honeypot="bot-field"
-        action="/success"
+        data-netlify-honeypot="bot-field"
+        action="/success/"
         class="space-y-5"
       >
         <!-- Netlify hidden field -->
         <input type="hidden" name="form-name" value="registro-comunidad" />
         <p class="hidden">
-          <label>No llenar: <input name="bot-field" /></label>
+          <label>No llenar: <input name="bot-field" autocomplete="off" /></label>
         </p>
 
         <!-- Nombre -->
