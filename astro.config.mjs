@@ -5,7 +5,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://aws-ug-morelos.netlify.app',
+  site: 'https://aws-ug-morelos-site.netlify.app',
   vite: {
     plugins: [tailwindcss()]
   },
